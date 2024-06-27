@@ -7,9 +7,12 @@ environment:
   sdk: '>=3.4.3 <4.0.0'
 
 dependencies:
+  dio: ^5.4.3+1
   flutter:
     sdk: flutter
+  go_router: ^14.2.0
   json_theme: ^6.4.1
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:
