@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pizzas_napoli/utils/number_formatter.dart';
@@ -27,11 +28,19 @@ class CartScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final item = cartProvider.cartItems[index];
                     return ListTile(
-                      leading: Image.network(
-                        'https://pizzas.shrp.dev/assets/${item.pizza.imageId}',
+                      leading: SizedBox(
                         width: 50,
-                        height: 50,
-                        fit: BoxFit.fill,
+                        child: CachedNetworkImage(
+                          progressIndicatorBuilder: (context, url, progress) =>
+                              Center(
+                            child: CircularProgressIndicator(
+                              value: progress.progress,
+                            ),
+                          ),
+                          imageUrl:
+                              'https://pizzas.shrp.dev/assets/${item.pizza.imageId}',
+                          fit: BoxFit.contain,
+                        ),
                       ),
                       title: Text(item.pizza.name),
                       subtitle: Text(

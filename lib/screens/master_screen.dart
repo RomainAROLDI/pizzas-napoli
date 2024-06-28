@@ -17,7 +17,7 @@ class MasterScreenState extends State<MasterScreen> {
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance!.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       Provider.of<PizzaProvider>(context, listen: false).fetchPizzas();
     });
   }
