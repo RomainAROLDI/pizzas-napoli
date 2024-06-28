@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -82,6 +83,13 @@ class SignUpScreenState extends State<SignUpScreen> {
               ElevatedButton(
                 onPressed: _signUp,
                 child: const Text('S\'inscrire'),
+              ),
+              const SizedBox(height: 60),
+              const Divider(height: 0),
+              const SizedBox(height: 10),
+              TextButton(
+                onPressed: () => context.go('/signin'),
+                child: const Text('Se connecter'),
               ),
             ],
           ),

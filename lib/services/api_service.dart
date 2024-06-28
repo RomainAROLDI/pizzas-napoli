@@ -13,15 +13,15 @@ class ApiService {
         '/items/pizzas/$pizzaId?fields[]=elements.ingredients_id.*&fields[]=*');
   }
 
-  Future<Response> createUser(Map<String, dynamic> data) async {
-    return await _dio.post('/auth/register', data: data);
+  Future<Response> createUser(String email, String password) async {
+    return await _dio.post('/users', data: {email, password});
   }
 
-  Future<Response> loginUser(Map<String, dynamic> data) async {
-    return await _dio.post('/auth/login', data: data);
+  Future<Response> loginUser(String email, String password) async {
+    return await _dio.post('/auth/login', data: {email, password});
   }
 
-  Future<Response> getUserProfile() async {
-    return await _dio.get('/users/me');
+  Future<Response> getUsers() async {
+    return await _dio.get('/items/users');
   }
 }

@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:json_theme/json_theme.dart';
+import 'package:pizzas_napoli/providers/auth_provider.dart';
 import 'package:pizzas_napoli/providers/cart_provider.dart';
 import 'package:pizzas_napoli/providers/favorites_provider.dart';
 import 'package:pizzas_napoli/providers/pizza_provider.dart';
+import 'package:pizzas_napoli/providers/user_provider.dart';
 import 'package:pizzas_napoli/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -31,6 +33,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => PizzaProvider()),
           ChangeNotifierProvider(create: (context) => CartProvider()),
           ChangeNotifierProvider(create: (context) => FavoritesProvider()),
+          ChangeNotifierProvider(create: (context) => UserProvider()),
+          ChangeNotifierProvider(create: (context) => AuthProvider()),
         ],
         child: MaterialApp.router(
             routerConfig: router, title: 'Pizzas Napoli', theme: theme));

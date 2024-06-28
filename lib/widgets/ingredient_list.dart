@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../models/pizza.dart';
+import '../models/ingredient.dart';
 
 class IngredientList extends StatelessWidget {
   final List<Ingredient> ingredients;

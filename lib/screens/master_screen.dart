@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pizzas_napoli/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import '../providers/pizza_provider.dart';
 import '../providers/cart_provider.dart';
@@ -27,6 +28,20 @@ class MasterScreenState extends State<MasterScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Carte des Pizzas'),
+        leading:
+            Consumer<AuthProvider>(builder: (context, authProvider, child) {
+          if (authProvider.currentUser == null) {
+            return IconButton(
+              onPressed: () => context.go('/signin'),
+              icon: const Icon(Icons.login_outlined),
+            );
+          }
+
+          return IconButton(
+            onPressed: () => {},
+            icon: const Icon(Icons.person),
+          );
+        }),
         actions: [
           Consumer<CartProvider>(
             builder: (context, cartProvider, child) {

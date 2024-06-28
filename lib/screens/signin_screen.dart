@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -20,8 +21,7 @@ class SignInScreenState extends State<SignInScreen> {
   }
 
   void _signIn() async {
-    if (_formKey.currentState!.validate()) {
-    }
+    if (_formKey.currentState!.validate()) {}
   }
 
   @override
@@ -60,6 +60,13 @@ class SignInScreenState extends State<SignInScreen> {
                 onPressed: _signIn,
                 child: const Text('Se connecter'),
               ),
+              const SizedBox(height: 60),
+              const Divider(height: 0),
+              const SizedBox(height: 10),
+              TextButton(
+                onPressed: () => context.go('/signup'),
+                child: const Text('S\'inscrire'),
+              ),
             ],
           ),
         ),
@@ -67,4 +74,3 @@ class SignInScreenState extends State<SignInScreen> {
     );
   }
 }
-
