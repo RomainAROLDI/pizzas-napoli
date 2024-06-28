@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pizzas_napoli/utils/number_formatter.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
 
@@ -10,11 +12,16 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Votre panier'),
+        leading: IconButton(
+            onPressed: () {
+              context.go('/');
+            },
+            icon: const Icon(Icons.arrow_back)),
       ),
       body: Consumer<CartProvider>(
         builder: (context, cartProvider, child) {
           return cartProvider.cartItems.isEmpty
-              ? const Center(child: Text('Your cart is empty'))
+              ? const Center(child: Text('Votre panier est vide.'))
               : ListView.builder(
                   itemCount: cartProvider.cartItems.length,
                   itemBuilder: (context, index) {
@@ -24,11 +31,11 @@ class CartScreen extends StatelessWidget {
                         'https://pizzas.shrp.dev/assets/${item.pizza.imageId}',
                         width: 50,
                         height: 50,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                       ),
                       title: Text(item.pizza.name),
                       subtitle: Text(
-                          '${item.pizza.price.toString()} € x ${item.quantity}'),
+                          '${formatNumber(item.pizza.price, 'fr_FR')} € x ${item.quantity}'),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -54,18 +61,18 @@ class CartScreen extends StatelessWidget {
       bottomNavigationBar: Consumer<CartProvider>(
         builder: (context, cartProvider, child) {
           return Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Total: ${cartProvider.totalPrice.toString()} €',
+                  'Total: ${formatNumber(cartProvider.totalPrice, 'fr_FR')} €',
                   style: const TextStyle(
                       fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton(
                   onPressed: () {},
-                  child: Text('Commander'),
+                  child: const Text('Commander'),
                 ),
               ],
             ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../providers/pizza_provider.dart';
+import '../providers/cart_provider.dart';
 import '../widgets/pizza_list_tile.dart';
 
 class MasterScreen extends StatefulWidget {
@@ -15,7 +17,9 @@ class MasterScreenState extends State<MasterScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<PizzaProvider>(context, listen: false).fetchPizzas();
+    SchedulerBinding.instance!.addPostFrameCallback((_) {
+      Provider.of<PizzaProvider>(context, listen: false).fetchPizzas();
+    });
   }
 
   @override
@@ -24,10 +28,40 @@ class MasterScreenState extends State<MasterScreen> {
       appBar: AppBar(
         title: const Text('Carte des Pizzas'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {
-              context.go('/cart');
+          Consumer<CartProvider>(
+            builder: (context, cartProvider, child) {
+              int itemCount = cartProvider.totalQuantity;
+
+              return Padding(
+                padding: const EdgeInsets.only(right: 24),
+                child: Stack(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        context.go('/cart');
+                      },
+                      icon: const Icon(Icons.shopping_cart_outlined),
+                    ),
+                    if (itemCount > 0)
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: CircleAvatar(
+                          radius: 10,
+                          backgroundColor: Theme.of(context).primaryColor,
+                          foregroundColor: Colors.white,
+                          child: Text(
+                            itemCount.toString(),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              );
             },
           ),
         ],

@@ -4,6 +4,7 @@ import '../models/pizza.dart';
 
 class CartProvider with ChangeNotifier {
   final List<CartItem> _cartItems = [];
+  int _totalQuantity = 0;
 
   List<CartItem> get cartItems => _cartItems;
 
@@ -12,6 +13,8 @@ class CartProvider with ChangeNotifier {
         0, (total, item) => total + item.pizza.price * item.quantity);
   }
 
+  int get totalQuantity => _totalQuantity;
+
   void addToCart(Pizza pizza) {
     final index = _cartItems.indexWhere((item) => item.pizza.id == pizza.id);
     if (index != -1) {
@@ -19,6 +22,7 @@ class CartProvider with ChangeNotifier {
     } else {
       _cartItems.add(CartItem(pizza: pizza));
     }
+    _totalQuantity++;
     notifyListeners();
   }
 
@@ -29,12 +33,20 @@ class CartProvider with ChangeNotifier {
       if (_cartItems[index].quantity <= 0) {
         _cartItems.removeAt(index);
       }
+      _totalQuantity--;
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   void clearCart() {
     _cartItems.clear();
+    _totalQuantity = 0;
     notifyListeners();
+  }
+
+  int getQuantity(String pizzaId) {
+    final index = _cartItems.indexWhere((item) => item.pizza.id == pizzaId);
+
+    return index != -1 ? _cartItems[index].quantity : 0;
   }
 }
